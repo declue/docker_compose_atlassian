@@ -1,0 +1,54 @@
+version: '3.1'
+
+services:
+  mysql:
+    image : declue/mysql
+    container_name: mymysql
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=testpass
+    volumes:
+      - ./certs:/etc/certs
+      - ./data/mysql:/var/lib/mysql
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "100m"
+
+  jira:
+    image: declue/jira
+    container_name: myjira
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./certs:/etc/certs
+      - ./data/jira:/var/atlassian/jira
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "100m"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  confluence:
+    image: declue/confluence
+    container_name: myconfluence
+    restart: always
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./certs:/etc/certs
+      - ./data/confluence:/var/atlassian/confluence
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "100m"
+    links:
+      - mysql
+    depends_on:
+      - mysql
