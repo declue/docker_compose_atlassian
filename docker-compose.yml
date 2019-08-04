@@ -12,6 +12,7 @@ services:
     volumes:
       - ./certs:/etc/certs
       - ./data/mysql:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
     logging:
       driver: "json-file"
       options:
@@ -26,6 +27,7 @@ services:
     volumes:
       - ./certs:/etc/certs
       - ./data/jira:/var/atlassian/jira
+      - /etc/localtime:/etc/localtime:ro
     logging:
       driver: "json-file"
       options:
@@ -44,6 +46,7 @@ services:
     volumes:
       - ./certs:/etc/certs
       - ./data/confluence:/var/atlassian/confluence
+      - /etc/localtime:/etc/localtime:ro
     logging:
       driver: "json-file"
       options:
